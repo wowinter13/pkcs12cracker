@@ -37,6 +37,26 @@ By default, all CPUs of the machine are utilized.
   2. Consider scoped threads.
   3. Explore a custom raw threading approach.
 
+
+
+
+Currently, only some arguments are supported,  
+which are as follows:  
+
+| argument     | ready?   | info|
+|:------------------------:    |:------------------:  | :------------------|
+| certificate_path                           |   ✅    |   Path to the PKCS#12 certificate file to crack|
+| dictionary_path                         |   ✅   |   Path to dictionary file for dictionary-based attack|
+| pattern                          |    𒉭  |   Pattern template for pattern-based attack|
+| pattern_symbol                         |    𒉭  |   Symbol used to mark variable positions in pattern|
+| maximum_length                         |    𒉭   |    Maximum password length for brute force attack|
+| minumum_length                           |  𒉭    |   Minimum password length for brute force attack|
+| bruteforce_flag                         |  ✅  |    Enable brute force attack mode|
+| char_sets                          |    𒉭    |    Character sets to use in brute force attack|
+| specific_chars                          |   𒉭  |   Custom character set for brute force attack|
+| delimiter                         |   𒉭    |    Delimiter for dictionary entries|
+| threads                         |    𒉭   |    Number of cracking threads [default: number of CPU cores]|
+
 ### Basic Usage
 
 (Provide code examples and usage instructions.)
