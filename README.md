@@ -49,13 +49,13 @@ which are as follows:
 | dictionary_path                         |   ✅   |   Path to dictionary file for dictionary-based attack|
 | pattern                          |    𒉭  |   Pattern template for pattern-based attack|
 | pattern_symbol                         |    𒉭  |   Symbol used to mark variable positions in pattern|
-| maximum_length                         |    𒉭   |    Maximum password length for brute force attack|
-| minumum_length                           |  𒉭    |   Minimum password length for brute force attack|
+| maximum_length                         |    ✅   |    Maximum password length for brute force attack|
+| minumum_length                           |  ✅    |   Minimum password length for brute force attack|
 | bruteforce_flag                         |  ✅  |    Enable brute force attack mode|
-| char_sets                          |    𒉭    |    Character sets to use in brute force attack|
-| specific_chars                          |   𒉭  |   Custom character set for brute force attack|
-| delimiter                         |   𒉭    |    Delimiter for dictionary entries|
-| threads                         |    𒉭   |    Number of cracking threads [default: number of CPU cores]|
+| char_sets                          |    ✅   |    Character sets to use in brute force attack|
+| specific_chars                          |   ✅  |   Custom character set for brute force attack|
+| delimiter                         |  ✅    |    Delimiter for dictionary entries|
+| threads                         |    ✅   |    Number of cracking threads [default: number of CPU cores]|
 
 ### Basic Usage
 
