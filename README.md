@@ -1,12 +1,19 @@
+<div align="center">
+
+<picture>
+  <img src="img/mekus.png" alt="Mekus" width="100">
+</picture>
+
 # pkcs12cracker
 
 This crate is a simple tool to concurrently attack a password-protected PKCS#12 (PFX/P12) file. Its main goal is to be faster, more efficient, and more reliable than existing tools written in Go and C.
 
-## Documentation
-
-Detailed documentation is available at [futurelink](https://google.com).
+</div>
 
 #### Reliability Badges [TODO]
+
+<a href=""><img src="https://img.shields.io/badge/built_with-Rust-dca282.svg?logo=rust" /></a>
+&nbsp;
 
 [![Build Status](https://travis-ci.com/username/repo.svg?branch=master)](https://travis-ci.com/username/repo)  
 [![Coverage Status](https://coveralls.io/repos/github/username/repo/badge.svg?branch=master)](https://coveralls.io/github/username/repo?branch=master)  
@@ -15,6 +22,12 @@ Detailed documentation is available at [futurelink](https://google.com).
 [![Release](https://img.shields.io/github/v/release/wowinter13/finance_rb.svg?style=flat-square)](https://github.com/wowinter13/finance_rb/releases)  
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)  
 [![Maintainability](https://api.codeclimate.com/v1/badges/bbca82ad7815794c6718/maintainability)](https://codeclimate.com/github/wowinter13/finance_rb/maintainability)
+
+
+## Documentation
+
+Detailed documentation is available at [futurelink](https://google.com).
+
 
 #### High-Level Overview [TODO]
 
