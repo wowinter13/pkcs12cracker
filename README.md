@@ -1,13 +1,17 @@
 <div align="center">
-
-<picture>
-  <img src="img/mekus.png" alt="Mekus" width="100">
-</picture>
-
-# pkcs12cracker
-
-This crate is a simple tool to concurrently attack a password-protected PKCS#12 (PFX/P12) file. Its main goal is to be faster, more efficient, and more reliable than existing tools written in Go and C.
-
+<table>
+  <tr>
+    <td bgcolor="#f0f0f0">
+      <div align="center">
+        <picture>
+          <img src="img/mekus.png" alt="Mekus" width="140">
+        </picture>
+        <h1>pkcs12#cracker</h1>
+        <p>This crate is a simple tool to concurrently attack a password-protected PKCS#12 (PFX/P12) file. Its main goal is to be faster, more efficient, and more reliable than existing tools written in Go and C.</p>
+      </div>
+    </td>
+  </tr>
+</table>
 </div>
 
 #### Reliability Badges [TODO]
@@ -39,6 +43,7 @@ By default, all CPUs of the machine are utilized.
 - Add Clippy.
 - Set up CI (tests, coverage, code quality checks, etc.).
 - Spend time on license comparison.
+- Enums/Structs
 
 #### Major TODOs:
 - Implement pattern functionality (e.g., `--pattern=abc?d`).
@@ -60,8 +65,8 @@ which are as follows:
 |:------------------------:    |:------------------:  | :------------------|
 | certificate_path                           |   ✅    |   Path to the PKCS#12 certificate file to crack|
 | dictionary_path                         |   ✅   |   Path to dictionary file for dictionary-based attack|
-| pattern                          |    𒉭  |   Pattern template for pattern-based attack|
-| pattern_symbol                         |    𒉭  |   Symbol used to mark variable positions in pattern|
+| pattern                          |    ✅  |   Pattern template for pattern-based attack|
+| pattern_symbol                         |    ✅  |   Symbol used to mark variable positions in pattern|
 | maximum_length                         |    ✅   |    Maximum password length for brute force attack|
 | minumum_length                           |  ✅    |   Minimum password length for brute force attack|
 | bruteforce_flag                         |  ✅  |    Enable brute force attack mode|

@@ -41,7 +41,7 @@ pub struct Args {
         long_help = "Enable pattern-based attack using the specified template. \
                      Variable positions are marked with a symbol (default: '@'). \
                      Example: 'Pass@@rd' will try all combinations replacing '@' positions.",
-        requires = "pattern_symbol"
+        conflicts_with_all = ["minumum_length", "maximum_length"]
     )]
     pub pattern: Option<String>,
 
@@ -52,9 +52,10 @@ pub struct Args {
         value_name = "CHAR",
         default_value = "@",
         help = "Symbol to mark variable positions in pattern [default: @]",
-        requires = "pattern"
+        requires = "pattern",
+        conflicts_with_all = ["minumum_length", "maximum_length"]
     )]
-    pub pattern_symbol: String,
+    pub pattern_symbol: char,
 
     /// Minimum password length for brute force attack
     #[arg(
@@ -64,7 +65,8 @@ pub struct Args {
         default_value = "1",
         value_parser = clap::value_parser!(u8).range(1..=255),
         help = "Minimum password length for brute force attack [default: 1]",
-        requires = "bruteforce_flag"
+        requires = "bruteforce_flag",
+        conflicts_with_all = ["pattern", "pattern_symbol"]
     )]
     pub minumum_length: u8,
 
@@ -77,7 +79,8 @@ pub struct Args {
         help = "Maximum password length for brute force attack [default: 6]",
         long_help = "Maximum password length for brute force attack [default: 6]\n\
                      Note: Many PKCS#12 implementations limit passwords to 15 bytes.",
-        requires = "bruteforce_flag"
+        requires = "bruteforce_flag",
+        conflicts_with_all = ["pattern", "pattern_symbol"]
     )]
     pub maximum_length: u8,
 
