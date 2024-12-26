@@ -2,17 +2,33 @@
 name = "pkcs12cracker"
 version = "0.1.0"
 edition = "2021"
+authors = ["Vladislav Dyachenko"]
+description = "A simple tool to concurrently attack password-protected PKCS#12 (PFX/P12) files"
 
 [dependencies]
 clap = { version = "4.5.21", features = ["derive"] }
+
 anyhow = "1.0.79"
+openssl = "0.10.68"
 memmap2 = "0.9.5"
 rayon = "1.10.0"
 num_cpus = "1.16.0"
-openssl = "0.10.68"
+log = "0.4.20"
 
 [dev-dependencies]
 pretty_assertions = "1.4.0"
 assert_cmd = "2.0.13"
 predicates = "3.0.4"
-anyhow = "1.0.79"
+tempfile = "3.10.0"
+test-log = "0.2.14"
+
+# Performance tuning
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = 'abort'
+strip = true
+
+[profile.dev]
+opt-level = 1

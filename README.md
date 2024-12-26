@@ -15,18 +15,16 @@
 </table>
 </div>
 
+<p align="center">
+<a href="https://www.rust-lang.org"><img src="https://img.shields.io/badge/built_with-Rust-dca282.svg?logo=rust" /></a>
+<a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" /></a>
+</p>
 
-#### Reliability Badges [TODO]
 
-<a href=""><img src="https://img.shields.io/badge/built_with-Rust-dca282.svg?logo=rust" /></a>
-&nbsp;
 
 [![Build Status](https://travis-ci.com/username/repo.svg?branch=master)](https://travis-ci.com/username/repo)  
-[![Coverage Status](https://coveralls.io/repos/github/username/repo/badge.svg?branch=master)](https://coveralls.io/github/username/repo?branch=master)  
-[![Dependency Status](https://deps.rs/repo/github/username/repo/status.svg)](https://deps.rs/repo/github/username/repo)  
 ![Tests](https://github.com/wowinter13/finance_rb/actions/workflows/tests.yml/badge.svg)  
 [![Release](https://img.shields.io/github/v/release/wowinter13/finance_rb.svg?style=flat-square)](https://github.com/wowinter13/finance_rb/releases)  
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)  
 [![Maintainability](https://api.codeclimate.com/v1/badges/bbca82ad7815794c6718/maintainability)](https://codeclimate.com/github/wowinter13/finance_rb/maintainability)
 
 
@@ -67,8 +65,8 @@ which are as follows:
 |:------------------------:    |:------------------:  | :------------------|
 | certificate_path                           |   ✅    |   Path to the PKCS#12 certificate file to crack|
 | dictionary_path                         |   ✅   |   Path to dictionary file for dictionary-based attack|
-| pattern                          |    𒉭  |   Pattern template for pattern-based attack|
-| pattern_symbol                         |    𒉭  |   Symbol used to mark variable positions in pattern|
+| pattern                          |    ✅   |   Pattern template for pattern-based attack|
+| pattern_symbol                         |    ✅   |   Symbol used to mark variable positions in pattern|
 | maximum_length                         |    ✅   |    Maximum password length for brute force attack|
 | minumum_length                           |  ✅    |   Minimum password length for brute force attack|
 | bruteforce_flag                         |  ✅  |    Enable brute force attack mode|
@@ -84,14 +82,6 @@ which are as follows:
 ### Advanced Usage
 
 (Provide more complex code examples and instructions.)
-
-## Contributing
-
-1. Fork the repository (provide a link).  
-2. Create your feature branch (`git checkout -b my-new-feature`).  
-3. Commit your changes (`git commit -am 'Add some feature'`).  
-4. Push to the branch (`git push origin my-new-feature`).  
-5. Create a new pull request.
 
 ## License
 

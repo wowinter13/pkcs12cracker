@@ -10,7 +10,7 @@ use std::path::PathBuf;
 #[command(about = "Fast, multi-threaded PKCS#12 password cracker")]
 #[command(
     long_about = "Cracks passwords for PKCS#12 files (.p12/.pfx) using multiple attack strategies: \
-    dictionary-based, pattern-based, or brute force. Supports multi-threading for improved performance."
+    dictionary-based, pattern-based, or brute force. Supports multi-threading for faster cracking."
 )]
 pub struct Args {
     /// Path to the PKCS#12 certificate file to crack
@@ -41,7 +41,7 @@ pub struct Args {
         long_help = "Enable pattern-based attack using the specified template. \
                      Variable positions are marked with a symbol (default: '@'). \
                      Example: 'Pass@@rd' will try all combinations replacing '@' positions.",
-        conflicts_with_all = ["minumum_length", "maximum_length"]
+        conflicts_with_all = ["minumum_length", "maximum_length", "bruteforce_flag"]
     )]
     pub pattern: Option<String>,
 
@@ -53,7 +53,7 @@ pub struct Args {
         default_value = "@",
         help = "Symbol to mark variable positions in pattern [default: @]",
         requires = "pattern",
-        conflicts_with_all = ["minumum_length", "maximum_length"]
+        conflicts_with_all = ["minumum_length", "maximum_length", "bruteforce_flag"]
     )]
     pub pattern_symbol: char,
 
@@ -104,8 +104,7 @@ pub struct Args {
                      n - digits (0-9)\n\
                      s - special chars (!@#$%^&*...)\n\
                      x - all of the above\n\
-                     Example: 'aAn' for alphanumeric passwords",
-        requires = "bruteforce_flag"
+                     Example: 'aAn' for alphanumeric passwords"
     )]
     pub char_sets: Option<String>,
 
@@ -115,8 +114,7 @@ pub struct Args {
         value_name = "CHARS",
         help = "Custom character set for brute force attack",
         long_help = "Define a custom set of characters to use in brute force attack.\n\
-                     Example: 'abcABC123!@#'",
-        requires = "bruteforce_flag"
+                     Example: 'abcABC123!@#'"
     )]
     pub specific_chars: Option<String>,
 
