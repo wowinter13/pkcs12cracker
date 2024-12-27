@@ -3,12 +3,11 @@
   <tr>
     <td bgcolor="#4B3B39">
       <div align="center">
-
-  <picture>
-    <img src="img/mekus.png" alt="Mekus">
-  </picture>
-        <h1 style="color:white">pkcs12#cracker</h1>
-        <p style="color:white">This crate is a simple tool to concurrently attack a password-protected PKCS#12 (PFX/P12) file. Its main goal is to be faster, more efficient, and more reliable than existing tools written in Go and C.</p>
+        <picture>
+          <img src="img/mekus.png" alt="Mekus">
+        </picture>
+        <h1 style="color:white">pkcs12cracker</h1>
+        <p style="color:white"> High-performance, multi-threaded PKCS#12 password cracker written in Rust. Supports dictionary, pattern-based, and brute force attacks with focus on performance and reliability.<s>Its main goal is to be faster, more efficient, and more reliable than existing tools written in Go and C.</s></p> 
       </div>
     </td>
   </tr>
@@ -18,71 +17,94 @@
 <p align="center">
 <a href="https://www.rust-lang.org"><img src="https://img.shields.io/badge/built_with-Rust-dca282.svg?logo=rust" /></a>
 <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" /></a>
+<a href="https://github.com/wowinter13/pkcs12cracker/releases"><img src="https://img.shields.io/github/v/release/wowinter13/pkcs12cracker.svg?style=flat-square" /></a>
+<a href="https://github.com/wowinter13/pkcs12cracker/actions"><img src="https://github.com/wowinter13/pkcs12cracker/actions/workflows/tests.yml/badge.svg" /></a>
 </p>
 
+### Documentation
 
+API reference and usage examples are available at [docs.rs](https://docs.rs/crate/pkcs12cracker/latest).
 
-[![Build Status](https://travis-ci.com/username/repo.svg?branch=master)](https://travis-ci.com/username/repo)  
-![Tests](https://github.com/wowinter13/finance_rb/actions/workflows/tests.yml/badge.svg)  
-[![Release](https://img.shields.io/github/v/release/wowinter13/finance_rb.svg?style=flat-square)](https://github.com/wowinter13/finance_rb/releases)  
-[![Maintainability](https://api.codeclimate.com/v1/badges/bbca82ad7815794c6718/maintainability)](https://codeclimate.com/github/wowinter13/finance_rb/maintainability)
+### Installation
 
+```bash
+cargo install pkcs12cracker
 
-## Documentation
+# Or build from source
+git clone https://github.com/wowinter13/pkcs12cracker
+cd pkcs12cracker
+cargo build --release
+```
 
-Detailed documentation is available at [futurelink](https://google.com).
+### Know-How
 
+- Memory-mapped file handling for efficient dictionary processing
+- Parallel processing with configurable thread count
+- Cache-friendly chunk-based password cracking
+- Optimized string handling and memory allocation
+- Multiple attack strategies support
 
-#### High-Level Overview [TODO]
-
-By default, all CPUs of the machine are utilized.
-
-(Provide a high-level overview of the project.)
-
-#### Tasks to Complete:
-- Add Clippy.
-- Set up CI (tests, coverage, code quality checks, etc.).
-- Spend time on license comparison.
-- Enums/ S
+#### Tasks to Complete
+- CI (+tests)
+- Benchmarks (memory, CPU, time, and operations per second).
 
 #### Major TODOs:
-- Implement pattern functionality (e.g., `--pattern=abc?d`).
-- Add custom charset functionality (e.g., `--charset=ěščřžýáíůä`), which requires thorough testing.
-- Create a Homebrew release.
-- Benchmark memory, CPU, time, and operations per second.
-- Explore advanced multithreading techniques:
-  1. Remove `par_split()` and `par_iter()`.
-  2. Consider scoped threads.
-  3. Explore a custom raw threading approach.
-
-
-
-
-Currently, only some arguments are supported,  
-which are as follows:  
-
-| argument     | ready?   | info|
-|:------------------------:    |:------------------:  | :------------------|
-| certificate_path                           |   ✅    |   Path to the PKCS#12 certificate file to crack|
-| dictionary_path                         |   ✅   |   Path to dictionary file for dictionary-based attack|
-| pattern                          |    ✅   |   Pattern template for pattern-based attack|
-| pattern_symbol                         |    ✅   |   Symbol used to mark variable positions in pattern|
-| maximum_length                         |    ✅   |    Maximum password length for brute force attack|
-| minumum_length                           |  ✅    |   Minimum password length for brute force attack|
-| bruteforce_flag                         |  ✅  |    Enable brute force attack mode|
-| char_sets                          |    ✅   |    Character sets to use in brute force attack|
-| specific_chars                          |   ✅  |   Custom character set for brute force attack|
-| delimiter                         |  ✅    |    Delimiter for dictionary entries|
-| threads                         |    ✅   |    Number of cracking threads [default: number of CPU cores]|
+- OS related performance optimizations.
+- Explore advanced multithreading techniques (try scoped threads or another raw threading approach).
 
 ### Basic Usage
 
-(Provide code examples and usage instructions.)
+#### Dictionary Attack
+Uses a wordlist file to crack passwords:
+```bash
+# Basic usage with newline-separated dictionary
+pkcs12cracker -d wordlist.txt cert.p12
+```
+
+#### Pattern-Based Attack
+Cracks passwords matching a specific pattern:
+```bash
+# Custom symbol for variable positions
+pkcs12cracker -p "Pass##rd" -s "#" cert.p12
+```
+
+#### Brute Force Attack
+
+```bash
+# Custom character sets
+pkcs12cracker -b -c aAn cert.p12  # alphanumeric
+```
 
 ### Advanced Usage
 
-(Provide more complex code examples and instructions.)
+#### Character Sets
+The `-c` flag supports combining multiple character sets:
+- `a` - lowercase letters (a-z)
+- `A` - uppercase letters (A-Z)
+- `n` - digits (0-9)
+- `s` - special characters (!@#$%^&*...)
+- `x` - all of the above
 
-## License
+Examples:
+```bash
+# Uppercase + numbers
+pkcs12cracker -b -c An cert.p12
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+# All characters except special
+pkcs12cracker -b -c aAn cert.p12
+
+# Everything
+pkcs12cracker -b -c x cert.p12
+```
+
+#### Custom Character Sets
+For specific requirements, use `--custom-chars`:
+```bash
+# Combine with standard sets
+pkcs12cracker -b -c an --custom-chars="!@#" cert.p12
+```
+
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

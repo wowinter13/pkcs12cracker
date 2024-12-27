@@ -3,7 +3,24 @@ name = "pkcs12cracker"
 version = "0.1.0"
 edition = "2021"
 authors = ["Vladislav Dyachenko"]
-description = "A simple tool to concurrently attack password-protected PKCS#12 (PFX/P12) files"
+description = "High-performance, multi-threaded PKCS#12 password cracker supporting dictionary, pattern-based, and brute force attacks"
+license = "MIT"
+documentation = "https://docs.rs/pkcs12cracker"
+homepage = "https://github.com/wowinter13/pkcs12cracker"
+repository = "https://github.com/wowinter13/pkcs12cracker"
+readme = "README.md"
+keywords = [
+  "pkcs12",
+  "security",
+  "password",
+  "cracking",
+  "pfx",
+  "p12",
+  "openssl",
+  "cryptography",
+]
+categories = ["cryptography", "command-line-utilities", "security", "passwords"]
+exclude = ["/.github", "/tests/fixtures", "*.pfx", "*.p12", "/img"]
 
 [dependencies]
 clap = { version = "4.5.21", features = ["derive"] }
@@ -22,13 +39,20 @@ predicates = "3.0.4"
 tempfile = "3.10.0"
 test-log = "0.2.14"
 
-# Performance tuning
 [profile.release]
 opt-level = 3
 lto = true
 codegen-units = 1
 panic = 'abort'
 strip = true
+debug = false
 
 [profile.dev]
 opt-level = 1
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[badges]
+maintenance = { status = "actively-developed" }
