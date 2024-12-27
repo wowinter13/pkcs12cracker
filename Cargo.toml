@@ -9,16 +9,7 @@ documentation = "https://docs.rs/pkcs12cracker"
 homepage = "https://github.com/wowinter13/pkcs12cracker"
 repository = "https://github.com/wowinter13/pkcs12cracker"
 readme = "README.md"
-keywords = [
-  "pkcs12",
-  "security",
-  "password",
-  "cracking",
-  "pfx",
-  "p12",
-  "openssl",
-  "cryptography",
-]
+keywords = ["pkcs12", "security", "password", "cracking", "p12"]
 categories = ["cryptography", "command-line-utilities", "security", "passwords"]
 exclude = ["/.github", "/tests/fixtures", "*.pfx", "*.p12", "/img"]
 
