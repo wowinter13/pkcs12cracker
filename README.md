@@ -18,7 +18,7 @@
 <a href="https://www.rust-lang.org"><img src="https://img.shields.io/badge/built_with-Rust-dca282.svg?logo=rust" /></a>
 <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" /></a>
 <a href="https://github.com/wowinter13/pkcs12cracker/releases"><img src="https://img.shields.io/github/v/release/wowinter13/pkcs12cracker.svg?style=flat-square" /></a>
-<a href="https://github.com/wowinter13/pkcs12cracker/actions"><img src="https://github.com/wowinter13/pkcs12cracker/actions/workflows/tests.yml/badge.svg" /></a>
+<a href="https://github.com/wowinter13/pkcs12cracker/actions"><img src="https://github.com/wowinter13/pkcs12cracker/actions/workflows/rust.yml/badge.svg" /></a>
 </p>
 
 ### Documentation
@@ -49,14 +49,38 @@ cargo build --release
 - Multiple attack strategies support
 
 #### Tasks to Complete
-- CI (+tests)
 - Benchmarks (memory, CPU, time, and operations per second).
+- Implement tests for all modules.
 
-#### Major TODOs:
+#### Discussable:
 - OS related performance optimizations.
 - Explore advanced multithreading techniques (try scoped threads or another raw threading approach).
 
 ### Basic Usage
+
+#### Help
+```bash
+Fast, multi-threaded PKCS#12 password cracker
+
+Usage: pkcs12cracker [OPTIONS] <FILE>...
+
+Arguments:
+  <FILE>...  Path to the PKCS#12 (.p12/.pfx) file to crack
+
+Options:
+  -d, --dictionary <FILE>      Use dictionary-based attack with the specified wordlist file
+  -p, --pattern <PATTERN>      Use pattern-based attack (e.g., 'Pass@@rd' where '@' marks variable positions)
+  -s, --pattern-symbol <CHAR>  Symbol to mark variable positions in pattern [default: @] [default: @]
+  -m, --min-length <NUM>       Minimum password length for brute force attack [default: 1] [default: 1]
+      --max-length <NUM>       Maximum password length for brute force attack [default: 6] [default: 6]
+  -b, --brute-force            Enable brute force attack mode
+  -c, --charset <SETS>         Character sets to use in brute force attack
+      --custom-chars <CHARS>   Custom character set for brute force attack
+      --delimiter <CHAR>       Dictionary file entry delimiter [default: newline] [default: "\n"]
+  -t, --threads <NUM>          Number of cracking threads [default: number of CPU cores] [default: 1]
+  -h, --help                   Print help (see more with '--help')
+  -V, --version                Print version
+```
 
 #### Dictionary Attack
 Uses a wordlist file to crack passwords:
