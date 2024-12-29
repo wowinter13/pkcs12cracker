@@ -95,15 +95,15 @@ impl PatternCracker {
     fn generate_pattern_combinations(
         charset: &[char],
         length: u8,
-        current: &String,
+        current: &str,
         result: &mut Vec<String>,
     ) {
         if length == 0 {
-            result.push(current.clone());
+            result.push(current.to_owned());
             return;
         }
 
-        let mut new_str = current.clone();
+        let mut new_str = current.to_owned();
         for &c in charset {
             new_str.push(c);
             Self::generate_pattern_combinations(charset, length - 1, &new_str, result);
@@ -147,7 +147,7 @@ impl PasswordCracker for PatternCracker {
         Self::generate_pattern_combinations(
             &charset,
             unknown_positions.len() as u8,
-            &String::new(),
+            "",
             &mut combinations,
         );
 

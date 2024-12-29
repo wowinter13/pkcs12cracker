@@ -63,15 +63,15 @@ pub(crate) fn check_password(
 pub(crate) fn generate_combinations(
     charset: &[char],
     length: u8,
-    current: &String,
+    current: &str,
     result: &mut Vec<String>,
 ) {
     if length == 0 {
-        result.push(current.clone());
+        result.push(current.to_owned());
         return;
     }
 
-    let mut new_str = current.clone();
+    let mut new_str = current.to_owned();
     for &c in charset {
         new_str.push(c);
         generate_combinations(charset, length - 1, &new_str, result);

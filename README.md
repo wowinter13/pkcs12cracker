@@ -30,6 +30,10 @@ API reference and usage examples are available at [docs.rs](https://docs.rs/crat
 ```bash
 cargo install pkcs12cracker
 
+# Brew tap (macOS)
+brew tap wowinter13/pkcs12cracker
+brew install pkcs12cracker
+
 # Or build from source
 git clone https://github.com/wowinter13/pkcs12cracker
 cd pkcs12cracker
