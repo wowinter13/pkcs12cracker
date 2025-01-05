@@ -44,3 +44,33 @@ pub trait PasswordCracker {
     /// Attempts to crack the provided PKCS#12 certificate.
     fn crack(&self, pkcs12: &Arc<Pkcs12>, result: &Arc<Mutex<CrackResult>>) -> Result<()>;
 }
+
+#[cfg(test)]
+mod tests {
+    use std::thread;
+
+    use super::*;
+
+    #[test]
+    fn test_crack_result() {
+        let result = CrackResult::new();
+        result.increment_attempts();
+        assert_eq!(result.get_attempts(), 1);
+    }
+
+    #[test]
+    fn test_crack_result_multi_threaded() {
+        let result = Arc::new(Mutex::new(CrackResult::new()));
+        let mut handles = vec![];
+        for _ in 0..100 {
+            let result = result.clone();
+            handles.push(thread::spawn(move || {
+                result.lock().unwrap().increment_attempts();
+            }));
+        }
+        for handle in handles {
+            handle.join().unwrap();
+        }
+        assert_eq!(result.lock().unwrap().get_attempts(), 100);
+    }
+}
