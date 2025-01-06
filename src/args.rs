@@ -6,7 +6,7 @@ use std::path::PathBuf;
 #[derive(Debug, Parser, Clone)]
 #[command(name = "pkcs12cracker")]
 #[command(author = "Vladislav Dyachenko")]
-#[command(version = "0.1.0")]
+#[command(version = "1.0.0")]
 #[command(about = "Fast, multi-threaded PKCS#12 password cracker")]
 #[command(
     long_about = "Cracks passwords for PKCS#12 files (.p12/.pfx) using multiple attack strategies: \
