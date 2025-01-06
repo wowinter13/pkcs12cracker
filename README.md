@@ -48,10 +48,6 @@ cargo build --release
 - Optimized string handling and memory allocation
 - Multiple attack strategies support
 
-#### Tasks to Complete
-- Benchmarks (memory, CPU, time, and operations per second).
-- Implement tests for all modules.
-
 #### Discussable:
 - OS related performance optimizations.
 - Explore advanced multithreading techniques (try scoped threads or another raw threading approach).
