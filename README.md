@@ -132,6 +132,9 @@ For specific requirements, use `--custom-chars`:
 pkcs12cracker -b -c an --custom-chars="!@#" cert.p12
 ```
 
+### Benchmarks
+
+See [BENCHMARKS.md](BENCHMARKS.md) for more information.
 
 ### License
 
