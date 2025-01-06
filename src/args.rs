@@ -175,3 +175,20 @@ fn validate_certificate_path(path: &str) -> Result<PathBuf> {
         bail!("Certificate file must have .p12 or .pfx extension");
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_validate_certificate_path() {
+        let path = String::from("test.p12");
+        assert!(validate_certificate_path(&path).is_ok());
+    }
+
+    #[test]
+    fn test_validate_certificate_path_invalid() {
+        let path = String::from("test");
+        assert!(validate_certificate_path(&path).is_err());
+    }
+}
