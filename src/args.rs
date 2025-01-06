@@ -140,6 +140,24 @@ pub struct Args {
     pub threads: u8,
 }
 
+impl Default for Args {
+    fn default() -> Self {
+        Self {
+            char_sets: None,
+            specific_chars: None,
+            certificate_path: PathBuf::new(),
+            dictionary_path: None,
+            pattern: None,
+            pattern_symbol: '@',
+            minumum_length: 1,
+            maximum_length: 8,
+            bruteforce_flag: false,
+            delimiter: String::new(),
+            threads: 1,
+        }
+    }
+}
+
 fn validate_threads_count(threads: &str) -> Result<u8> {
     let threads = threads.parse::<u8>()?;
     if threads > 1 {

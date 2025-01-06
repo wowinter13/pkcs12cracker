@@ -66,3 +66,65 @@ pub fn build_charset(args: &Args) -> Result<String> {
 
     Ok(charset)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::args::Args;
+
+    #[test]
+    fn test_build_charset() {
+        let args = Args {
+            char_sets: Some("aA".to_string()),
+            specific_chars: Some("@#".to_string()),
+            ..Default::default()
+        };
+        let charset = build_charset(&args).unwrap();
+        assert_eq!(
+            charset,
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#"
+        );
+    }
+
+    #[test]
+    fn test_build_charset_default() {
+        let args = Args::default();
+        let charset = build_charset(&args).unwrap();
+        assert_eq!(charset, LOWER_ALPHABET);
+    }
+
+    #[test]
+    fn test_build_charset_specific_chars() {
+        let args = Args {
+            specific_chars: Some("@#".to_string()),
+            ..Default::default()
+        };
+        let charset = build_charset(&args).unwrap();
+        assert!(charset.contains("@"));
+        assert!(charset.contains("#"));
+    }
+
+    #[test]
+    fn test_build_charset_all() {
+        let args = Args {
+            char_sets: Some("x".to_string()),
+            ..Default::default()
+        };
+        let charset = build_charset(&args).unwrap();
+        assert_eq!(charset, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ ");
+    }
+
+    #[test]
+    fn test_build_charset_with_umlauts() {
+        let args = Args {
+            char_sets: Some("aA".to_string()),
+            specific_chars: Some("äöüß".to_string()),
+            ..Default::default()
+        };
+        let charset = build_charset(&args).unwrap();
+        assert_eq!(
+            charset,
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZäöüß"
+        );
+    }
+}
