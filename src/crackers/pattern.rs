@@ -110,6 +110,90 @@ impl PatternCracker {
             new_str.pop();
         }
     }
+
+    /// Generates chunks of combinations for large pattern sizes to avoid memory issues
+    /// and improve parallelism.
+    ///
+    /// # Arguments
+    ///
+    /// * `charset` - Characters to use in combinations
+    /// * `unknown_positions` - Number of unknown positions
+    /// * `chunk_size` - Size of each chunk
+    /// * `pkcs12` - The PKCS#12 certificate to crack
+    /// * `result` - Shared result tracking structure
+    /// * `pattern` - The template pattern
+    /// * `positions` - Indices of variable positions in the pattern
+    ///
+    /// # Returns
+    ///
+    /// Returns `true` if the password was found, `false` otherwise.
+    fn process_chunks_in_parallel(
+        charset: &[char],
+        unknown_count: usize,
+        chunk_size: usize,
+        pkcs12: &Arc<Pkcs12>,
+        result: &Arc<Mutex<CrackResult>>,
+        pattern: &str,
+        positions: &[usize],
+    ) -> bool {
+        let charset_len = charset.len();
+        let mut total_combinations: usize = 1;
+        for _ in 0..unknown_count {
+            // Overflow protection for very large combination spaces
+            if total_combinations > usize::MAX / charset_len {
+                total_combinations = usize::MAX / 2;
+                break;
+            }
+            total_combinations *= charset_len;
+        }
+
+        let adjusted_chunk_size = if unknown_count > 4 {
+            charset_len.pow(3)
+        } else {
+            chunk_size
+        };
+
+        println!(
+            "Processing {} combinations in chunks of ~{}",
+            total_combinations, adjusted_chunk_size
+        );
+
+        // We'll use position indices to iterate through the combination space
+        // The "position indices" approach allows us to process combinations
+        // without generating them all at once
+
+        let num_chunks = (total_combinations + adjusted_chunk_size - 1) / adjusted_chunk_size;
+        let chunks_range = 0..num_chunks;
+
+        // Use Rayon for parallel processing of chunks
+        chunks_range
+            .into_par_iter()
+            .find_any(|chunk_idx| {
+                let start_idx = chunk_idx * adjusted_chunk_size;
+                let end_idx = (start_idx + adjusted_chunk_size).min(total_combinations);
+
+                // Generate just this chunk of combinations
+                let mut chunk_combinations = Vec::with_capacity(end_idx - start_idx);
+                for combo_idx in start_idx..end_idx {
+                    // Convert the linear index to a combination
+                    let mut indices = Vec::with_capacity(unknown_count);
+                    let mut remaining = combo_idx;
+
+                    for _ in 0..unknown_count {
+                        indices.push(remaining % charset_len);
+                        remaining /= charset_len;
+                    }
+
+                    // Generate the actual combination string
+                    let combination: String = indices.into_iter().map(|idx| charset[idx]).collect();
+
+                    chunk_combinations.push(combination);
+                }
+
+                Self::process_chunk(&chunk_combinations, pattern, positions, pkcs12, result)
+            })
+            .is_some()
+    }
 }
 
 impl PasswordCracker for PatternCracker {
@@ -138,24 +222,43 @@ impl PasswordCracker for PatternCracker {
         }
 
         let charset: Vec<char> = self.charset.chars().collect();
-        let mut combinations = Vec::new();
+        let unknown_count = unknown_positions.len();
 
         println!(
             "Generating pattern combinations for {} unknown positions",
-            unknown_positions.len()
-        );
-        Self::generate_pattern_combinations(
-            &charset,
-            unknown_positions.len() as u8,
-            "",
-            &mut combinations,
+            unknown_count
         );
 
-        combinations
-            .par_chunks(super::CHUNK_SIZE)
-            .find_any(|chunk| {
-                Self::process_chunk(chunk, &password, &unknown_positions, pkcs12, result)
-            });
+        let found = if unknown_count >= 4 {
+            Self::process_chunks_in_parallel(
+                &charset,
+                unknown_count,
+                super::CHUNK_SIZE,
+                pkcs12,
+                result,
+                &password,
+                &unknown_positions,
+            )
+        } else {
+            let mut combinations = Vec::new();
+            Self::generate_pattern_combinations(
+                &charset,
+                unknown_count as u8,
+                "",
+                &mut combinations,
+            );
+
+            combinations
+                .par_chunks(super::CHUNK_SIZE)
+                .find_any(|chunk| {
+                    Self::process_chunk(chunk, &password, &unknown_positions, pkcs12, result)
+                })
+                .is_some()
+        };
+
+        if !found {
+            println!("All combinations exhausted, password not found");
+        }
 
         Ok(())
     }
