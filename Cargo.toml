@@ -1,6 +1,6 @@
 [package]
 name = "pkcs12cracker"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 authors = ["Vladislav Dyachenko"]
 description = "High-performance, multi-threaded PKCS#12 password cracker supporting dictionary, pattern-based, and brute force attacks"
